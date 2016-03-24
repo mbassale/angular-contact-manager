@@ -32,6 +32,9 @@ controller('AppCtrl', function ($scope, $location) {
 }).
 controller('IndexCtrl', function($scope, contacts) {
     $scope.contacts = contacts.get();
+    $scope.delete = function(index){
+	    contacts.destroy(index);
+	};
 }).
 controller('AddCtrl', function($scope, contacts) {
 	$scope.submit = function(){
@@ -76,6 +79,9 @@ factory('contacts', function() {
 		},
 		create: function(contact) {
 			contacts.push(contact);
+		},
+		destroy: function(index){
+		    contacts.splice(index, 1);
 		}
 	};
 }).
