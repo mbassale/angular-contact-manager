@@ -90,8 +90,14 @@ directive('gravatar', function(){
             scope.img = 'http://gravatar.com/avatar/'+md5(attrs.email)+'?s='+size;
             scope.class = attrs.class;
         }
-    }
-}).filter('paragraph', function(){
+    };
+})
+directive('editable', function() {
+	return {
+		
+	};
+}).
+filter('paragraph', function(){
     return function(input){
         return (input) ? input.replace(/\n/g, '<br />') : input;
     };
