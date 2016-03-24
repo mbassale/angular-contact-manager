@@ -7,19 +7,25 @@
 			<div class="form-group">
 				<label for="name" class="col-sm-4 control-label">Name</label>
 				<div class="col-sm-8">
-					<p id="name" class="form-control-static">{{ contact.name }}</p>
+					<p id="name" class="form-control-static" 
+						editable="contact.name" 
+						field-type="text">{{ contact.name }}</p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="phone" class="col-sm-4 control-label">Phone Number</label>
 				<div class="col-sm-8">
-					<p id="phone" class="form-control-static">{{ contact.phone }}</p>
+					<p id="phone" class="form-control-static" 
+						editable="contact.phone" 
+						field-type="text">{{ contact.phone }}</p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="address" class="col-sm-4 control-label">Address</label>
 				<div class="col-sm-8">
-					<p id="address" class="form-control-static" ng-bind-html="contact.address | paragraph"></p>
+					<p id="address" class="form-control-static"
+						editable="contact.address" 
+						field-type="textarea"></p>
 				</div>
 			</div>
 	    </div>
@@ -27,19 +33,26 @@
 		    <div class="form-group">
 				<label for="email" class="col-sm-4 control-label">Email Address</label>
 				<div class="col-sm-8">
-					<p id="email" class="form-control-static">{{ contact.email }}</p>
+					<p id="email" 
+						class="form-control-static" 
+						editable="contact.email" 
+						field-type="email">{{ contact.email }}</p>
 				</div>
 			</div>
 		    <div class="form-group">
 				<label for="website" class="col-sm-4 control-label">Website</label>
 				<div class="col-sm-8">
-					<p id="website" class="form-control-static">{{ contact.website }}</p>
+					<p id="website" class="form-control-static" 
+						editable="contact.website" 
+						field-type="text">{{ contact.website }}</p>
 				</div>
 			</div>
 		    <div class="form-group">
 				<label for="notes" class="col-sm-4 control-label">Notes</label>
 				<div class="col-sm-8">
-					<p id="notes" class="form-control-static">{{ contact.notes }}</p>
+					<p id="notes" class="form-control-static" 
+						editable="contact.notes" 
+						field-type="textarea">{{ contact.notes }}</p>
 				</div>
 			</div>
   		</div>
