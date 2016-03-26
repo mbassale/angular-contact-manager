@@ -3,7 +3,7 @@
 *
 * Description
 */
-angular.module('contactsMgr', ['ngRoute', 'ngSanitize']).
+angular.module('contactsMgr', ['ngRoute', 'ngSanitize', 'mgcrea.ngStrap']).
 config(function($routeProvider, $locationProvider) {
 	$routeProvider.when('/', {
 		controller: 'IndexCtrl',
@@ -16,6 +16,10 @@ config(function($routeProvider, $locationProvider) {
 	$routeProvider.when('/contact/:id', {
 		controller: 'ContactCtrl',
 		templateUrl: 'assets/partials/contact.html'
+	});
+	$routeProvider.when('/demo', {
+		controller: 'DemoCtrl',
+		templateUrl: 'assets/partials/demo.html'
 	});
 	$routeProvider.otherwise({
 		redirectTo: '/'
@@ -30,17 +34,63 @@ controller('AppCtrl', function ($scope, $location) {
 		return (path == $location.path()) ? 'active' : '';
 	};
 }).
-controller('IndexCtrl', function($scope, contacts) {
+controller('DemoCtrl', function($scope, $alert) {
+	$scope.modal = {
+		title: 'Modal Title',
+		content: 'Modal Content'
+	};
+
+	$scope.tooltip = {
+	    title: 'Tooltip Title'
+	};
+
+	$scope.popover = {
+	    title: 'Title',
+	    content: 'Popover content'
+	};
+
+	$scope.alert = {
+	    title: 'Title',
+	    content: 'Alert content',
+	    type: 'danger'
+	};
+
+	var alert = $alert({
+        title: 'Alert Title!',
+        content: 'Here\'s some content.',
+        type: 'danger',
+        container: '#alertContainer',
+        show: false
+    });
+	$scope.showAlert = alert.show;
+}).
+controller('IndexCtrl', function($scope, contacts, $alert) {
     $scope.contacts = contacts.get();
+    var deletionAlert = $alert({
+	    title: 'Success!',
+	    content: 'The contact was deleted successfully.',
+	    type: 'success',
+	    container: '#alertContainer',
+	    show: false
+	});
     $scope.delete = function(index){
 	    contacts.destroy(index);
+	    deletionAlert.show();
 	};
 }).
-controller('AddCtrl', function($scope, contacts) {
+controller('AddCtrl', function($scope, contacts, $alert) {
+	var alert = $alert({
+	    title: 'Success!',
+	    content: 'The contact was added successfully.',
+	    type: 'success',
+	    container: '#alertContainer',
+	    show: false
+	});
 	$scope.submit = function(){
 	    contacts.create($scope.contact);
 	    $scope.contact = null;
 	    $scope.added = true;
+	    alert.show();
 	};
 }).
 controller('ContactCtrl', function($scope, $routeParams, contacts) {

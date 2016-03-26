@@ -1,0 +1,14 @@
+<div class="page-header">
+	<h1>AngularStrap Demo</h1>
+</div>
+<div id="alertContainer"></div>
+<hr />
+<button class="btn btn-primary" bs-modal="modal" data-animation="am-fade-and-scale">Show Modal</button>
+<button class="btn btn-link" bs-tooltip="tooltip">what's this?</button>
+<input type="text" bs-tooltip="tooltip" data-trigger="focus" data-placement="right">
+<button class="btn btn-primary" bs-popover="popover">Show Popover</button>
+<button class="btn btn-primary" bs-alert="alert" data-container="#alertContainer">Show Alert</button>
+
+<hr />
+
+<button class="btn btn-success" ng-click="showAlert()">Alert via Service</button>
