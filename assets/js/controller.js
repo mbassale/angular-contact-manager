@@ -65,7 +65,6 @@ controller('DemoCtrl', function($scope, $alert) {
 	$scope.showAlert = alert.show;
 }).
 controller('IndexCtrl', function($scope, contacts, $alert) {
-    $scope.contacts = contacts.get();
     var deletionAlert = $alert({
 	    title: 'Success!',
 	    content: 'The contact was deleted successfully.',
@@ -73,6 +72,24 @@ controller('IndexCtrl', function($scope, contacts, $alert) {
 	    container: '#alertContainer',
 	    show: false
 	});
+	var networkErrorAlert = $alert({
+		title: 'Network Error!',
+		contact: 'Cannot communicate with server, please try again later.',
+		type: 'danger',
+		container: '#alertContainer',
+		show:false
+	});
+
+	$scope.contacts = [];
+    contacts.get().then(
+    	function(contacts) {
+    		$scope.contacts = contacts;
+    	},
+    	function() {
+    		networkErrorAlert.show();
+    	}
+	);
+    
     $scope.delete = function(index){
 	    contacts.destroy(index);
 	    deletionAlert.show();
@@ -101,37 +118,34 @@ filter('truncate', function() {
 		return (input.length > limit) ? input.substr(0, limit) + '…' : input;
 	};
 }).
-factory('contacts', function() {
-	var contacts = [
-        {
-            name: 'Stephen Radford',
-            phone: '0123456789',
-            address: '123, Some Street\nLeicester\nLE1 2AB',
-            email: 'stephen@email.com',
-            website: 'stephenradford.me',
-            notes: ''
-        },
-        {
-            name: 'Declan Proud',
-            phone: '91234859',
-            address: '234, Some Street\nLeicester\nLE1 2AB',
-            email: 'declan@declan.com',
-            website: 'declanproud.me',
-            notes: 'Some notes about the contact.'
-        }
-    ];
+factory('contacts', function($q, $http) {
+	var contactState = {
+		contacts: []
+	};
 	return {
 		get: function() {
-			return contacts;
+			var deferred = $q.defer();
+
+			$http.get('data/data.json').then(
+				function (response) {
+					contactState.contacts = response.data;
+					deferred.resolve(contactState.contacts);
+				},
+				function () {
+					deferred.reject();
+				}
+			);
+
+			return deferred.promise;
 		},
 		find: function(index) {
-			return contacts[index];
+			return contactState.contacts[index];
 		},
 		create: function(contact) {
-			contacts.push(contact);
+			contactState.contacts.push(contact);
 		},
 		destroy: function(index){
-		    contacts.splice(index, 1);
+		    contactState.contacts.splice(index, 1);
 		}
 	};
 }).
