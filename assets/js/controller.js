@@ -4,7 +4,7 @@
 * Description
 */
 angular.module('contactsMgr', ['ngRoute', 'ngSanitize', 'mgcrea.ngStrap']).
-config(function($routeProvider, $locationProvider) {
+config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$routeProvider.when('/', {
 		controller: 'IndexCtrl',
 		templateUrl: 'assets/partials/index.html'
@@ -24,8 +24,8 @@ config(function($routeProvider, $locationProvider) {
 	$routeProvider.otherwise({
 		redirectTo: '/'
 	});
-}).
-controller('AppCtrl', function ($scope, $location) {
+}]).
+controller('AppCtrl', ['$scope', '$location', function ($scope, $location) {
 	$scope.startSearch = function(){
         $location.path('/');
     };
@@ -33,8 +33,8 @@ controller('AppCtrl', function ($scope, $location) {
 	$scope.pageClass = function(path){
 		return (path == $location.path()) ? 'active' : '';
 	};
-}).
-controller('DemoCtrl', function($scope, $alert) {
+}]).
+controller('DemoCtrl', ['$scope', '$alert', function($scope, $alert) {
 	$scope.modal = {
 		title: 'Modal Title',
 		content: 'Modal Content'
@@ -63,8 +63,8 @@ controller('DemoCtrl', function($scope, $alert) {
         show: false
     });
 	$scope.showAlert = alert.show;
-}).
-controller('IndexCtrl', function($scope, contacts, $alert) {
+}]).
+controller('IndexCtrl', ['$scope', 'contacts', '$alert', function($scope, contacts, $alert) {
     var deletionAlert = $alert({
 	    title: 'Success!',
 	    content: 'The contact was deleted successfully.',
@@ -89,13 +89,13 @@ controller('IndexCtrl', function($scope, contacts, $alert) {
     		networkErrorAlert.show();
     	}
 	);
-    
+
     $scope.delete = function(index){
 	    contacts.destroy(index);
 	    deletionAlert.show();
 	};
-}).
-controller('AddCtrl', function($scope, contacts, $alert) {
+}]).
+controller('AddCtrl', ['$scope', 'contacts', '$alert', function($scope, contacts, $alert) {
 	var alert = $alert({
 	    title: 'Success!',
 	    content: 'The contact was added successfully.',
@@ -109,16 +109,16 @@ controller('AddCtrl', function($scope, contacts, $alert) {
 	    $scope.added = true;
 	    alert.show();
 	};
-}).
-controller('ContactCtrl', function($scope, $routeParams, contacts) {
+}]).
+controller('ContactCtrl', ['$scope', '$routeParams', 'contacts', function($scope, $routeParams, contacts) {
 	$scope.contact = contacts.find($routeParams.id);
-}).
+}]).
 filter('truncate', function() {
 	return function(input, limit) {
 		return (input.length > limit) ? input.substr(0, limit) + '…' : input;
 	};
 }).
-factory('contacts', function($q, $http) {
+factory('contacts', ['$q', '$http', function($q, $http) {
 	var contactState = {
 		contacts: []
 	};
@@ -148,7 +148,7 @@ factory('contacts', function($q, $http) {
 		    contactState.contacts.splice(index, 1);
 		}
 	};
-}).
+}]).
 directive('gravatar', function(){
     return {
     	restrict: 'AE',
@@ -167,23 +167,23 @@ directive('editable', function() {
 		restrict: 'AE',
 		templateUrl: 'assets/partials/editable.html',
 		scope: {
-            value: '=editable',
-            field: '@fieldType'
-        },
-        controller: function($scope){
-        	$scope.editor = {
-			    showing: false,
-			    value: $scope.value
+			value: '=editable',
+			field: '@fieldType'
+		},
+		controller: ['$scope', function($scope){
+			$scope.editor = {
+				showing: false,
+				value: $scope.value
 			};
 			$scope.toggleEditor = function(){
-			    $scope.editor.showing = !$scope.editor.showing;
+				$scope.editor.showing = !$scope.editor.showing;
 			};
 			$scope.field = ($scope.field) ? $scope.field : 'text';
 			$scope.save = function(){
-			    $scope.value = $scope.editor.value;
-			    $scope.toggleEditor();
+				$scope.value = $scope.editor.value;
+				$scope.toggleEditor();
 			};
-        }
+		}]
 	};
 }).
 filter('paragraph', function(){
