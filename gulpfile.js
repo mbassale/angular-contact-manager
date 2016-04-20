@@ -6,16 +6,20 @@ var webserver = require('gulp-webserver');
 
 var paths = {
     js: [
-        'assets/js/vendor/jquery.js',
-        'assets/js/vendor/bootstrap.js',
-        'assets/js/vendor/angular.js',
-        'assets/js/vendor/angular-animate.js',
-        //'assets/js/vendor/angular-resource.js',
-        'assets/js/vendor/angular-route.js',
-        'assets/js/vendor/angular-sanitize.js',
-        'assets/js/vendor/angular-strap.js',
-        'assets/js/vendor/angular-strap.tpl.min.js',
-        'assets/js/controller.js'
+        'app/vendor/jquery.js',
+        'app/vendor/bootstrap.js',
+        'app/vendor/angular.js',
+        'app/vendor/angular-animate.js',
+        'app/vendor/angular-route.js',
+        'app/vendor/angular-sanitize.js',
+        'app/vendor/angular-strap.js',
+        'app/vendor/angular-strap.tpl.min.js',
+        'app/app.js',
+        'app/controllers/AppController.js',
+        'app/controllers/IndexController.js',
+        'app/controllers/AddController.js',
+        'app/controllers/ContactController.js',
+        'app/controllers/DemoController.js'
     ]
 };
 
