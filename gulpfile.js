@@ -15,6 +15,7 @@ var paths = {
         'app/vendor/angular-strap.js',
         'app/vendor/angular-strap.tpl.min.js',
         'app/app.js',
+        'app/services/ContactsService.js',
         'app/controllers/AppController.js',
         'app/controllers/IndexController.js',
         'app/controllers/AddController.js',
