@@ -1,3 +1,4 @@
 node_modules/
 assets/js/build/
 assets/js/ContactsMgr.min.js
+.DS_Store

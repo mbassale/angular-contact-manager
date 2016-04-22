@@ -3,19 +3,19 @@ angular.module('contactsMgr', ['ngRoute', 'ngSanitize', 'mgcrea.ngStrap'])
     function ($routeProvider, $locationProvider) {
       $routeProvider.when('/', {
         controller: 'IndexCtrl',
-        templateUrl: 'assets/partials/index.html'
+        templateUrl: 'partials/index.html'
       });
       $routeProvider.when('/add-contact', {
         controller: 'AddCtrl',
-        templateUrl: 'assets/partials/add.html'
+        templateUrl: 'partials/add.html'
       });
       $routeProvider.when('/contact/:id', {
         controller: 'ContactCtrl',
-        templateUrl: 'assets/partials/contact.html'
+        templateUrl: 'partials/contact.html'
       });
       $routeProvider.when('/demo', {
         controller: 'DemoCtrl',
-        templateUrl: 'assets/partials/demo.html'
+        templateUrl: 'partials/demo.html'
       });
       $routeProvider.otherwise({
         redirectTo: '/'
@@ -59,7 +59,7 @@ angular.module('contactsMgr', ['ngRoute', 'ngSanitize', 'mgcrea.ngStrap'])
 }).directive('editable', function () {
   return {
     restrict: 'AE',
-    templateUrl: 'assets/partials/editable.html',
+    templateUrl: 'partials/editable.html',
     scope: {
       value: '=editable',
       field: '@fieldType'
