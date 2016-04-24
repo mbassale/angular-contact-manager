@@ -7,7 +7,7 @@ angular.module('contactsMgr')
       get: function () {
         var deferred = $q.defer();
 
-        $http.get('data/data.json').then(
+        $http.get('api/contacts').then(
           function (response) {
             contactState.contacts = response.data;
             deferred.resolve(contactState.contacts);
@@ -23,10 +23,42 @@ angular.module('contactsMgr')
         return contactState.contacts[index];
       },
       create: function (contact) {
-        contactState.contacts.push(contact);
+        var deferred = $q.defer();
+
+        $http.post('api/contacts', contact).then(
+          function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.contact);
+            } else {
+              deferred.reject();
+            }
+          },
+          function () {
+            deferred.reject();
+          }
+        );
+
+        $http.get('api/contacts').then(
+          function (response) {
+            contactState.contacts = response.data;
+          },
+          function () {}
+        );
+
+        return deferred.promise;
       },
       destroy: function (index) {
-        contactState.contacts.splice(index, 1);
+        var deferred = $q.defer();
+        var contact = this.find(index);
+        $http.delete('api/contacts/' + contact._id).then(
+          function (response) {
+            deferred.resolve(response.data.success);
+          },
+          function () {
+            deferred.reject();
+          }
+        );
+        return deferred.promise;
       }
     };
   }]);

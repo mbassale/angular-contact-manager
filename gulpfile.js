@@ -25,7 +25,7 @@ var paths = {
   ]
 };
 
-gulp.task('styles', function() {
+gulp.task('styles', function () {
   gulp.src(paths.css)
     .pipe(concat('styles.css'))
     .pipe(gulp.dest('backend/public/css'));
@@ -43,7 +43,14 @@ gulp.task('watch', function () {
 });
 
 gulp.task('server', function () {
-    server.run(['backend/app.js']);
+  server.run(['backend/bin/www']);
+
+  gulp.watch([
+    'backend/bin/www',
+    'backend/routes/**/*.js',
+    'backend/app.js'
+  ], [server.run]);
+  gulp.watch(paths.js, ['uglify', server.run]);
 });
 
 gulp.task('default', ['styles', 'uglify', 'server']);

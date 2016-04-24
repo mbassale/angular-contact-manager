@@ -15,18 +15,29 @@ angular.module('contactsMgr')
       show: false
     });
 
+    var reloadContacts = function () {
+      contacts.get().then(
+        function (contacts) {
+          $scope.contacts = contacts;
+        },
+        function () {
+          networkErrorAlert.show();
+        }
+      );
+    };
+
     $scope.contacts = [];
-    contacts.get().then(
-      function (contacts) {
-        $scope.contacts = contacts;
-      },
-      function () {
-        networkErrorAlert.show();
-      }
-    );
 
     $scope.delete = function (index) {
-      contacts.destroy(index);
-      deletionAlert.show();
+      contacts.destroy(index).then(
+        function (success) {
+          deletionAlert.show();
+          reloadContacts();
+        },
+        function () {
+          networkErrorAlert.show();
+        }
+      );
     };
+    reloadContacts();
   }]);
