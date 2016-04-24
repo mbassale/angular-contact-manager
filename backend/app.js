@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/api');
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/contactsManager');
+
 var app = express();
 
 // view engine setup
