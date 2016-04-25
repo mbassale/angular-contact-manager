@@ -21,6 +21,9 @@ router.post('/contacts', function (req, res) {
   contact.name = req.body.name;
   contact.email = req.body.email;
   contact.phone = req.body.phone;
+  contact.address = req.body.address;
+  contact.website = req.body.website;
+  contact.notes = req.body.notes;
   contact.slug = slug(req.body.name);
 
   // save the bear and check for errors
