@@ -47,6 +47,26 @@ angular.module('contactsMgr')
 
         return deferred.promise;
       },
+      update: function (contact) {
+        var deferred = $q.defer();
+        $http.put('api/contacts/' + contact._id, contact).then(
+          function (response) {
+            deferred.resolve(response.data.success);
+          },
+          function () {
+            deferred.reject();
+          }
+        );
+
+        $http.get('api/contacts').then(
+          function (response) {
+            contactState.contacts = response.data;
+          },
+          function () {}
+        );
+
+        return deferred.promise;
+      },
       destroy: function (index) {
         var deferred = $q.defer();
         var contact = this.find(index);
