@@ -1,4 +1,6 @@
 assets/
 node_modules/
 backend/public/js/ContactsMgr.min.js
+backend/public/css/styles.css
+frontend/css/bootstrap.css
 .DS_Store

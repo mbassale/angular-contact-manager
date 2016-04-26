@@ -1,10 +1,12 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
-var pkg = require('./package.json');
+var less = require('gulp-less');
 var server = require('gulp-express');
+var pkg = require('./package.json');
 
 var paths = {
+  less: 'frontend/less/*.less',
   css: [
     'frontend/css/bootstrap.css'
   ],
@@ -24,6 +26,14 @@ var paths = {
     'frontend/controllers/DemoController.js'
   ]
 };
+
+gulp.task('less', function(){
+  gulp.src('frontend/less/bootstrap.less')
+    .pipe(less({
+        filename: 'bootstrap.css'
+    }))
+    .pipe(gulp.dest('frontend/css'));
+});
 
 gulp.task('styles', function () {
   gulp.src(paths.css)
@@ -50,7 +60,8 @@ gulp.task('server', function () {
     'backend/routes/**/*.js',
     'backend/app.js'
   ], [server.run]);
-  gulp.watch(paths.js, ['uglify', server.run]);
+  gulp.watch(paths.js, ['less', 'styles', 'uglify', server.run]);
+  gulp.watch(paths.less, ['less', 'styles', 'uglify', server.run]);
 });
 
-gulp.task('default', ['styles', 'uglify', 'server']);
+gulp.task('default', ['less', 'styles', 'uglify', 'server']);
