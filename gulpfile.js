@@ -53,10 +53,10 @@ gulp.task('watch', function () {
 });
 
 gulp.task('server', function () {
-  server.run(['backend/bin/www']);
+  server.run(['backend/bin/contact-manager']);
 
   gulp.watch([
-    'backend/bin/www',
+    'backend/bin/contact-manager',
     'backend/routes/**/*.js',
     'backend/app.js'
   ], [server.run]);
